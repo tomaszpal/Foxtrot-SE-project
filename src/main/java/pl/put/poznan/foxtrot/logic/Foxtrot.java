@@ -11,14 +11,16 @@ public class Foxtrot {
 
     public String[] transforms;
     public String text;
+    public ShortestPath shortestPath;
 
     public Foxtrot(String[] transforms, String text) {
         this.transforms = transforms;
         this.text = text;
+        this.shortestPath = bfs(new ArrayList<Integer>(10)); //Test call of bfs
     }
 
-    public ShortestPath bfs(){
-        return new ShortestPath(new ArrayList<>(), 0.0f);
+    public ShortestPath bfs(ArrayList<Integer> nodeList){
+        return new ShortestPath(nodeList, 21.37f);
     }
 
     public ShortestPath dfs(String text){
