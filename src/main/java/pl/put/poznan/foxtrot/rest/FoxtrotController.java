@@ -14,16 +14,16 @@ public class FoxtrotController {
     private static final Logger logger = LoggerFactory.getLogger(FoxtrotController.class);
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public String get(@PathVariable String text,
-                              @RequestParam(value="transforms", defaultValue="upper,escape") String[] transforms) {
+    public Foxtrot foxtrot(@PathVariable String text, @RequestParam(value="transforms", defaultValue="upper,escape") String[] transforms) {
 
         // log the parameters
         logger.debug(text);
         logger.debug(Arrays.toString(transforms));
+        System.out.println(Arrays.toString(transforms));
+        System.out.println(text);
 
         // do the transformation, you should run your logic here, below just a silly example
-        Foxtrot transformer = new Foxtrot(transforms);
-        return transformer.transform(text);
+        return new Foxtrot(transforms, text);
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
@@ -35,8 +35,9 @@ public class FoxtrotController {
         logger.debug(Arrays.toString(transforms));
 
         // do the transformation, you should run your logic here, below just a silly example
-        Foxtrot transformer = new Foxtrot(transforms);
-        return transformer.transform(text);
+//        Foxtrot transformer = new Foxtrot(transforms);
+//        return transformer.transform(text);
+        return "Hello POST";
     }
 
 
