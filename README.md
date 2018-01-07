@@ -22,6 +22,7 @@ http://localhost:8080/example_text?transforms=example_transform
 It returns data in format:
 ```
 {"transforms":["example_transform"],
- "text":"example_text"}
+ "text":"example_text",
+ "shortestPath":{"path":[],"costSum":0.0}}
 ```
 This is just test build.
