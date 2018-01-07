@@ -1,27 +1,32 @@
 package pl.put.poznan.foxtrot.logic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Node {
     private Integer id;
     private String name;
     private Type type;
-    private List<Node> outgoing;
-    private List<Node> incoming;
+    private List<Connection> outgoing;
+    private List<Connection> incoming;
 
-    public Node(Integer id, Type type, List<Node> outgoing, List<Node> incoming) {
-        this(id, type, outgoing, incoming, null);
+    public enum Type {
+        entry, exit, regular
     }
 
-    public Node(int id, Type type, List<Node> outgoing, List<Node> incoming, String name) {
+    public Node(Integer id, Type type) {
+        this(id, type, null);
+    }
+
+    public Node(Integer id, Type type, String name) {
         this.id = id;
         this.type = type;
-        this.outgoing = outgoing;
-        this.incoming = incoming;
+        this.outgoing = new ArrayList<>();
+        this.incoming = new ArrayList<>();
         this.name = name;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -45,19 +50,19 @@ public class Node {
         this.type = type;
     }
 
-    public List<Node> getOutgoing() {
+    public List<Connection> getOutgoing() {
         return outgoing;
     }
 
-    public void setOutgoing(List<Node> outgoing) {
-        this.outgoing = outgoing;
+    public void addOutgoing(Connection outgoing) {
+        this.outgoing.add(outgoing);
     }
 
-    public List<Node> getIncoming() {
+    public List<Connection> getIncoming() {
         return incoming;
     }
 
-    public void setIncoming(List<Node> incoming) {
-        this.incoming = incoming;
+    public void addIncoming(Connection incoming) {
+        this.incoming.add(incoming);
     }
 }

@@ -1,17 +1,17 @@
 package pl.put.poznan.foxtrot.logic;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ShortestPath{
-    private ArrayList<Integer> path;
+    private List<Node> path;
     private Float costSum;
 
-    public ShortestPath(ArrayList<Integer> path, Float costSum) {
+    public ShortestPath(List<Node> path, Float costSum) {
         this.path = path;
         this.costSum = costSum;
     }
 
-    public ArrayList<Integer> getPath() {
+    public List<Node> getPath() {
         return path;
     }
 
