@@ -1,12 +1,13 @@
 package pl.put.poznan.foxtrot.logic;
 
-import pl.put.poznan.foxtrot.logic.*;
-import java.util.ArrayList;
-import java.util.Arrays;
+import com.sun.media.sound.InvalidDataException;
+
+import java.util.List;
 
 /**
  * This is just an example to show that the logic should be outside the REST service.
  */
+<<<<<<< HEAD
 public class Foxtrot {
 
     public String[] transforms;
@@ -34,4 +35,8 @@ public class Foxtrot {
     public String transform(String text) {
         return "Modified text: " + text + "\nTransforms: " + Arrays.toString(transforms);
     }
+=======
+public interface Foxtrot {
+    ShortestPath find(Graph graph) throws InvalidDataException;
+>>>>>>> remotes/origin/logic
 }
