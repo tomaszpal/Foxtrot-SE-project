@@ -13,7 +13,7 @@ Tomasz Paluszkiewicz
 
 ---
 
-Guide
+GET
 ===
 To recieve data in JSON use GET request in form:
 ```
@@ -25,4 +25,13 @@ It returns data in format:
  "text":"example_text",
  "shortestPath":{"path":[],"costSum":0.0}}
 ```
-This is just test build.
+
+---
+
+POST
+===
+To send data to service use POST request containing JSON in format like this:
+```
+{"nodes":[1, 2, 3, 4, 5], "connections": [[1,2],[5,3],[2,3]] }
+```
+It should return same data you sent.
