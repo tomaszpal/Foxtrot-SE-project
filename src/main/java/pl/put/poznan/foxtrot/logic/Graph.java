@@ -1,6 +1,9 @@
 package pl.put.poznan.foxtrot.logic;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class Graph {
     private List<Node> nodeList;
@@ -24,26 +27,65 @@ public class Graph {
     }
 
     /**
-     * This method checks if graph contains entry and exit points.
-     * @return True if graph contains the points, false otherwise.
+     * This method checks if graph contains one entry and one exit points.
+     * @return True if graph contains exactly one of each points (one entry, one exit),
+     *         false otherwise.
      */
-    public boolean check() {
+    private boolean checkPoints() {
         boolean hasEntry = false;
         boolean hasExit = false;
 
         for (Node node: nodeList) {
             if (node.getType() == Node.Type.entry) {
-                hasEntry = true;
-                entry = node;
+                if (hasEntry) {
+                    hasEntry = false;
+                    break;
+                }
+                else {
+                    hasEntry = true;
+                    entry = node;
+                }
             }
             else if (node.getType() == Node.Type.exit){
-                hasExit = true;
-                exit = node;
+                if (hasExit) {
+                    hasExit = false;
+                    break;
+                }
+                else {
+                    hasExit = true;
+                    exit = node;
+                }
             }
         }
         return hasEntry & hasExit;
     }
 
+    private boolean checkReachable() {
+        HashMap<Node, Boolean> visited = new HashMap<>();
+        LinkedList<Node> queue = new LinkedList<>();
+        for (Node node: nodeList) {
+            visited.put(node, false);
+        }
+        visited.put(entry, true);
+        queue.add(entry);
+        while (!queue.isEmpty()) {
+            Node current = queue.poll();
+            for (Connection connection: current.getOutgoing()) {
+                Node neighbor = connection.getTo();
+                if (neighbor == exit)
+                    return true;
+                if (!visited.get(neighbor)) {
+                    visited.put(neighbor, true);
+                    queue.add(neighbor);
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean check() {
+        return checkPoints() && checkReachable();
+    }
     public Node getEntry() {
         return entry;
     }
