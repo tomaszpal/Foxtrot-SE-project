@@ -23,9 +23,10 @@ public class FoxtrotController {
     private static final Logger logger = LoggerFactory.getLogger(FoxtrotController.class);
     public static NetworkWrapper networkWrapper = new NetworkWrapper();
 
+    //Response to GET request
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     public Foxtrot foxtrot(@PathVariable String text, @RequestParam(value="transforms", defaultValue="upper,escape") String[] transforms) {
-        // log the parameters
+        //Log the parameters
         logger.debug(text);
         logger.debug(Arrays.toString(transforms));
         System.out.println(Arrays.toString(transforms));
@@ -33,6 +34,7 @@ public class FoxtrotController {
         return new Foxtrot(transforms, text);
     }
 
+    //Response to POST request
     @RequestMapping(method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
     public Network post (@RequestBody Network receivedNetwork) throws JsonProcessingException {
         if(receivedNetwork != null) {
