@@ -4,7 +4,7 @@ import java.util.List;
 
 public class FoxtrotDFS implements Foxtrot{
     @Override
-    public ShortestPath find(List<Node> nodeList, List<Connection> connectionList) {
+    public ShortestPath find(Graph graph) {
         return null;
     }
 }

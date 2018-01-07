@@ -3,15 +3,15 @@ package pl.put.poznan.foxtrot.logic;
 import java.util.List;
 
 public class ShortestPath{
-    private List<Integer> path;
+    private List<Node> path;
     private Float costSum;
 
-    public ShortestPath(List<Integer> path, Float costSum) {
+    public ShortestPath(List<Node> path, Float costSum) {
         this.path = path;
         this.costSum = costSum;
     }
 
-    public List<Integer> getPath() {
+    public List<Node> getPath() {
         return path;
     }
 
