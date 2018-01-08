@@ -1,5 +1,6 @@
 package pl.put.poznan.foxtrot.logic;
 
+
 /**
  * This interface provides a method that should be used
  * for finding shortest path between entry and exit point in a graph.

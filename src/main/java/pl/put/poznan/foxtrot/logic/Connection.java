@@ -15,6 +15,10 @@ public class Connection {
     /** This property holds information about value (cost, distance etc.) of connection. */
     private Float value;
 
+    public Connection(){
+        //System.out.println("Connection created!");
+    };
+
     public Connection(Node from, Node to, Float value) {
         this.from = from;
         this.to = to;

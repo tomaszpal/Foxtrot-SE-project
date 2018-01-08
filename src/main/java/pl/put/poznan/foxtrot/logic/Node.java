@@ -26,6 +26,11 @@ public class Node {
      *  - entry,
      *  - exit.
      */
+    public Node(){
+        outgoing = new ArrayList<>();
+        //System.out.println("Node created!");
+    };
+
     public enum Type {
         regular, entry, exit
     }
