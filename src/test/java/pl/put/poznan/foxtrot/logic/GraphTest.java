@@ -1,10 +1,11 @@
 package pl.put.poznan.foxtrot.logic;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
-import java.io.OutputStream;
+import org.junit.Before;
+import org.junit.After;
+import org.junit.Test;
+
+
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.*;
@@ -16,7 +17,7 @@ class GraphTest {
     private List<Node> nodeList;
     private List<Connection> connectionList;
 
-    @BeforeEach
+    @Before
     void setUp() {
         nodeList = new ArrayList<>();
         connectionList = new ArrayList<>();
@@ -49,7 +50,7 @@ class GraphTest {
         graph = new Graph(nodeList, connectionList);
     }
 
-    @AfterEach
+    @After
     void tearDown() {
         nodeList.clear();
         connectionList.clear();
