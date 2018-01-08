@@ -1,7 +1,7 @@
 package pl.put.poznan.foxtrot.logic;
 
 
-import com.sun.media.sound.InvalidDataException;
+
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -28,10 +28,10 @@ public class FoxtrotDFS implements Foxtrot {
     private Node exit;
 
     @Override
-    public Path find(Graph graph) throws InvalidDataException {
-        if (!graph.check()) {
-            throw new InvalidDataException();
-        }
+    public Path find(Graph graph) throws Exception {
+//        if (!graph.check()) {
+//            throw new Exception();
+//        }
         
         visited = new HashMap<>();
         minCost = Float.POSITIVE_INFINITY;

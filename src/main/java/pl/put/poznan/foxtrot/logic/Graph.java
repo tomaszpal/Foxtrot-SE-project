@@ -1,9 +1,6 @@
 package pl.put.poznan.foxtrot.logic;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This class holds information about graph (nodes, connections,
@@ -20,6 +17,11 @@ public class Graph {
     /** This property holds information about exit node. */
     private Node exit;
 
+    public Graph (){
+        //System.out.println("Graph created!");
+
+    };
+
     public Graph(List<Node> nodes, List<Connection> connections) {
         nodeList = nodes;
         connectionList = connections;
@@ -34,6 +36,21 @@ public class Graph {
                 }
             }
         }
+
+    }
+
+    public void createOutgoing(){
+        for (Node node: nodeList) {
+            for (Connection connection: connectionList) {
+                if (node.equals(connection.getFrom())) {
+                    node.addOutgoing(connection);
+                }
+                else if (node.equals(connection.getTo())) {
+                    node.addIncoming(connection);
+                }
+            }
+        }
+
     }
 
     /**
@@ -83,6 +100,7 @@ public class Graph {
         }
         visited.put(entry, true);
         queue.add(entry);
+
         while (!queue.isEmpty()) {
             Node current = queue.poll();
             for (Connection connection: current.getOutgoing()) {

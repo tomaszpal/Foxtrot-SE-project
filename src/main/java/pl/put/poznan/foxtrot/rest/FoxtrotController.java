@@ -3,12 +3,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import pl.put.poznan.foxtrot.logic.Foxtrot;
-import pl.put.poznan.foxtrot.logic.Network;
+import pl.put.poznan.foxtrot.logic.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import pl.put.poznan.foxtrot.logic.NetworkWrapper;
 
+
+import java.io.PrintStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,28 +21,56 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class FoxtrotController {
 
     private static final Logger logger = LoggerFactory.getLogger(FoxtrotController.class);
-    public static NetworkWrapper networkWrapper = new NetworkWrapper();
+    Graph lastGraph;
 
     //Response to GET request
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public Foxtrot foxtrot(@PathVariable String text, @RequestParam(value="transforms", defaultValue="upper,escape") String[] transforms) {
-        //Log the parameters
-        logger.debug(text);
-        logger.debug(Arrays.toString(transforms));
-        System.out.println(Arrays.toString(transforms));
-        System.out.println(text);
-        return new Foxtrot(transforms, text);
+    public Path get (@RequestParam(value="transforms", defaultValue="dfs") String transforms) throws JsonProcessingException {
+        Path result = null;
+        Graph graph = lastGraph;
+        System.out.println(transforms);
+        try {
+            if (transforms.equals("bfs")) {
+                System.out.println("Using BFS");
+                FoxtrotBFS foxtrotBFS = new FoxtrotBFS();
+                graph.createOutgoing();
+                result = foxtrotBFS.find(graph);
+            }
+            if (transforms.equals("dfs")) {
+                System.out.println("Using DFS");
+                FoxtrotDFS foxtrotDFS = new FoxtrotDFS();
+                graph.createOutgoing();
+                result = foxtrotDFS.find(graph);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace(new PrintStream(System.out));
+        }
+        return result;
     }
 
     //Response to POST request
     @RequestMapping(method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
-    public Network post (@RequestBody Network receivedNetwork) throws JsonProcessingException {
-        if(receivedNetwork != null) {
-            networkWrapper.AddToNetworkList(receivedNetwork);
-        } else {
-            System.out.println("Received object is null!");
+    public Path post (@RequestBody Graph graph, @RequestParam(value="transforms", defaultValue="dfs") String transforms) throws JsonProcessingException {
+        Path result = null;
+        lastGraph = graph;
+        System.out.println(transforms);
+        try{
+            if(transforms.equals("bfs")){
+                System.out.println("Using BFS");
+                FoxtrotBFS foxtrotBFS = new FoxtrotBFS();
+                graph.createOutgoing();
+                result = foxtrotBFS.find(graph);
+            }
+            if(transforms.equals("dfs")){
+                System.out.println("Using DFS");
+                FoxtrotDFS foxtrotDFS = new FoxtrotDFS();
+                graph.createOutgoing();
+                result = foxtrotDFS.find(graph);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace(new PrintStream(System.out));
         }
-        return receivedNetwork;
+        return result;
     }
 
 

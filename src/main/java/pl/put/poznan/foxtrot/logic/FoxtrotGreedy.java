@@ -4,7 +4,7 @@ import java.util.List;
 
 public class FoxtrotGreedy implements Foxtrot{
     @Override
-    public ShortestPath find(Graph graph) {
+    public Path find(Graph graph) {
         return null;
     }
 }
