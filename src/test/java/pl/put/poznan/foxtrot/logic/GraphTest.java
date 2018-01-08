@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.*;
@@ -24,7 +25,7 @@ class GraphTest {
         Node n2 = new Node(1, Node.Type.regular, "name2");
         Node n3 = new Node(2, Node.Type.regular, "name3");
         Node n4 = new Node(3, Node.Type.regular, "name4");
-        Node n5 = new Node(4, Node.Type.regular, "name5");
+        Node n5 = new Node(4, Node.Type.exit, "name5");
 
         Connection c1 = new Connection(n1, n2, 1.0f);
         Connection c2 = new Connection(n1, n3, 3.0f);
@@ -55,6 +56,12 @@ class GraphTest {
     }
 
     @Test
+    void checkGood() {
+        boolean result = graph.check();
+        assertTrue(result);
+    }
+
+    @Test
     void checkUnique() {
         Node node = new Node(0, Node.Type.regular, "name6");
         graph.getNodeList().add(node);
@@ -79,9 +86,13 @@ class GraphTest {
     }
 
     @Test
-    void checkUnrechable() {
-        graph.getConnectionList().remove(4);
-        graph.getConnectionList().remove(3);
+    void checkUnreachable() {
+        graph.check();
+        for (Connection connection: graph.getExit().getIncoming()) {
+            Node node = connection.getFrom();
+            node.getOutgoing().clear();
+        }
+        graph.getExit().getIncoming().clear();
         boolean result = graph.check();
         assertFalse(result);
     }

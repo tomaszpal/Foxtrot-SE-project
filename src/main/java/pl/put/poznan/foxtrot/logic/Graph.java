@@ -118,7 +118,7 @@ public class Graph {
      * @return True if both conditions are met, false otherwise.
      */
     public boolean check() {
-        return checkPoints() && checkReachable();
+        return checkUnique() && checkPoints() && checkReachable();
     }
 
     public Node getEntry() {
