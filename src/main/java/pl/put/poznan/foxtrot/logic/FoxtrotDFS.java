@@ -1,21 +1,38 @@
 package pl.put.poznan.foxtrot.logic;
 
 
+import com.sun.media.sound.InvalidDataException;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+/**
+ * This class implements Foxtrot interface.
+ * It uses modified DFS strategy to search for the shortest path.
+ */
 public class FoxtrotDFS implements Foxtrot {
+    /** This property holds information about visited nodes. */
     private Map<Node, Boolean> visited;
+    /** This property holds information about current cost of the path. */
     private Float cost;
+    /** This property holds information about current path. */
     private LinkedList<Node> path;
+    /** This property holds information about cost of current minimal path. */
     private Float minCost;
+    /** This property holds information about current minimal path. */
     private LinkedList<Node> minPath;
+    /** This property holds information about entry node. */
     private Node entry;
+    /** This property holds information about exit node. */
     private Node exit;
 
     @Override
-    public ShortestPath find(Graph graph) {
+    public Path find(Graph graph) throws InvalidDataException {
+        if (!graph.check()) {
+            throw new InvalidDataException();
+        }
+        
         visited = new HashMap<>();
         minCost = Float.POSITIVE_INFINITY;
 
@@ -29,9 +46,16 @@ public class FoxtrotDFS implements Foxtrot {
         cost = 0.0f;
         VisitNode(entry);
         minPath.add(exit);
-        return new ShortestPath(minPath, minCost);
+        return new Path(minPath, minCost);
     }
 
+    /**
+     * This method marks given node as visited
+     * and updates it current costs. If the node is exit
+     * the current path is saved if its shorter than
+     * previous minimal path.
+     * @param node - Node to be visited.
+     */
     private void VisitNode(Node node) {
         if (node == exit) {
             if (cost < minCost) {
