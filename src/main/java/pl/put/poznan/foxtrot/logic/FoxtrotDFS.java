@@ -29,9 +29,9 @@ public class FoxtrotDFS implements Foxtrot {
 
     @Override
     public Path find(Graph graph) throws Exception {
-//        if (!graph.check()) {
-//            throw new Exception();
-//        }
+        if (!graph.check()) {
+            throw new Exception();
+        }
         
         visited = new HashMap<>();
         minCost = Float.POSITIVE_INFINITY;
