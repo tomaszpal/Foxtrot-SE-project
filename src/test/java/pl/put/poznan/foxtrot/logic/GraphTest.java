@@ -18,7 +18,7 @@ class GraphTest {
     private List<Connection> connectionList;
 
     @Before
-    void setUp() {
+    public void setUp() {
         nodeList = new ArrayList<>();
         connectionList = new ArrayList<>();
 
@@ -51,19 +51,19 @@ class GraphTest {
     }
 
     @After
-    void tearDown() {
+    public void tearDown() {
         nodeList.clear();
         connectionList.clear();
     }
 
     @Test
-    void checkGood() {
+    public void checkGood() {
         boolean result = graph.check();
         assertTrue(result);
     }
 
     @Test
-    void checkUnique() {
+    public void checkUnique() {
         Node node = new Node(0, Node.Type.regular, "name6");
         graph.getNodeList().add(node);
         boolean result = graph.check();
@@ -71,7 +71,7 @@ class GraphTest {
     }
 
     @Test
-    void check2Entries() {
+    public void check2Entries() {
         Node node = new Node(5, Node.Type.entry, "name6");
         graph.getNodeList().add(node);
         boolean result = graph.check();
@@ -79,7 +79,7 @@ class GraphTest {
     }
 
     @Test
-    void check2Exits() {
+    public void check2Exits() {
         Node node = new Node(5, Node.Type.exit, "name6");
         graph.getNodeList().add(node);
         boolean result = graph.check();
@@ -87,7 +87,7 @@ class GraphTest {
     }
 
     @Test
-    void checkUnreachable() {
+    public void checkUnreachable() {
         graph.check();
         for (Connection connection: graph.getExit().getIncoming()) {
             Node node = connection.getFrom();
