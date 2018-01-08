@@ -1,17 +1,32 @@
 package pl.put.poznan.foxtrot.logic;
 
+import com.sun.media.sound.InvalidDataException;
+
 import java.util.*;
 
-public class FoxtrotBFS implements  Foxtrot{
+/**
+ * This class implements Foxtrot interface.
+ * It uses modified BFS strategy to search for the shortest path.
+ */
+public class FoxtrotBFS implements Foxtrot {
+    /** This property holds information about nodes that need to be checked. */
     private Set<Node> nodeSet;
+    /** This property holds information about costs from entry to node. */
     private Map<Node, Float> costs;
+    /** This property holds information about costs from entry to node. */
     private Map<Node, Node> prev;
+    /** This property holds information about previously checked nodes. */
     private LinkedList<Node> path;
+    /** This property holds information about entry node. */
     private Node entry;
+    /** This property holds information about exit node. */
     private Node exit;
 
     @Override
-    public ShortestPath find(Graph graph) {
+    public Path find(Graph graph) throws InvalidDataException {
+        if (!graph.check()) {
+            throw new InvalidDataException();
+        }
         nodeSet = new HashSet<>();
         costs = new HashMap<>();
         prev = new HashMap<>();
@@ -50,9 +65,14 @@ public class FoxtrotBFS implements  Foxtrot{
         path.add(node);
         Collections.reverse(path);
         Float cost = costs.get(exit);
-        return new ShortestPath(path, cost);
+        return new Path(path, cost);
     }
 
+    /**
+     * This method returns Node from nodeSet, which has
+     * the lowest distance from entry point in cost map.
+     * @return Node from node set with the lowest distance from entry.
+     */
     private Node getMinDistNode() {
         Node minNode = null;
         Float min = Float.POSITIVE_INFINITY;

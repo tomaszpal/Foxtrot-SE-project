@@ -2,11 +2,16 @@ package pl.put.poznan.foxtrot.logic;
 
 import com.sun.media.sound.InvalidDataException;
 
-import java.util.List;
-
 /**
- * This is just an example to show that the logic should be outside the REST service.
+ * This interface provides a method that should be used
+ * for finding shortest path between entry and exit point in a graph.
  */
 public interface Foxtrot {
-    ShortestPath find(Graph graph) throws InvalidDataException;
+    /**
+     * This method finds shortest path between entry and exit nodes.
+     * @param graph - Graph, in which will
+     * @return Shortest path between entry and exit point with its cost.
+     * @throws InvalidDataException when provided data in a graph is incorrect.
+     */
+    Path find(Graph graph) throws InvalidDataException;
 }
