@@ -17,6 +17,8 @@ class GraphTest {
     private List<Node> nodeList;
     private List<Connection> connectionList;
 
+    GraphTest() {}
+
     @Before
     public void setUp() {
         nodeList = new ArrayList<>();
