@@ -54,6 +54,22 @@ public class Graph {
     }
 
     /**
+     * This method checks if graph nodes have unique ids.
+     * @return True if nodes have unique ids,
+     *         false otherwise.
+     */
+    private boolean checkUnique() {
+        Set<Integer> set = new HashSet<>();
+        for (Node node: nodeList) {
+            if (set.contains(node.getId())) {
+                return false;
+            }
+            set.add(node.getId());
+        }
+        return true;
+    }
+
+    /**
      * This method checks if graph contains exactly one entry and one exit point.
      * @return True if graph contains exactly one of each points (one entry, one exit),
      *         false otherwise.
@@ -84,7 +100,7 @@ public class Graph {
                 }
             }
         }
-        return hasEntry & hasExit;
+        return hasEntry && hasExit;
     }
 
     /**
@@ -117,12 +133,13 @@ public class Graph {
     }
 
     /**
-     * This method checks if graph has only one entry and only one exit point,
+     * This method checks if nodes have unique ids, then
+     * if graph has only one entry and only one exit point,
      * then it checks if exit point is reachable from entry point.
      * @return True if both conditions are met, false otherwise.
      */
     public boolean check() {
-        return checkPoints() && checkReachable();
+        return checkUnique() && checkPoints() && checkReachable();
     }
 
     public Node getEntry() {

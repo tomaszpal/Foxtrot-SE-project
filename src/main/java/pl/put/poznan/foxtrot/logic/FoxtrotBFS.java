@@ -1,7 +1,6 @@
 package pl.put.poznan.foxtrot.logic;
 
 
-
 import java.util.*;
 
 /**
@@ -25,7 +24,6 @@ public class FoxtrotBFS implements Foxtrot {
     @Override
     public Path find(Graph graph) throws Exception {
         if (!graph.check()) {
-            System.out.println("Wrong graph!");
             throw new Exception();
         }
         nodeSet = new HashSet<>();
