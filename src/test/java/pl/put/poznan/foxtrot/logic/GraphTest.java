@@ -11,7 +11,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 
-class GraphTest {
+public class GraphTest {
 
     private Graph graph;
     private List<Node> nodeList;
