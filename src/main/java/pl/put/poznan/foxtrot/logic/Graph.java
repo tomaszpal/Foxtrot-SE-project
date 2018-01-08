@@ -79,7 +79,7 @@ public class Graph {
         boolean hasExit = false;
 
         for (Node node: nodeList) {
-            if (node.getType() == Node.Type.entry) {
+            if (node.getType().equals(Node.Type.entry)) {
                 if (hasEntry) {
                     hasEntry = false;
                     break;
@@ -89,7 +89,7 @@ public class Graph {
                     entry = node;
                 }
             }
-            else if (node.getType() == Node.Type.exit){
+            else if (node.getType().equals(Node.Type.exit)){
                 if (hasExit) {
                     hasExit = false;
                     break;
@@ -121,7 +121,7 @@ public class Graph {
             Node current = queue.poll();
             for (Connection connection: current.getOutgoing()) {
                 Node neighbor = connection.getTo();
-                if (neighbor == exit)
+                if (neighbor.equals(exit))
                     return true;
                 if (!visited.get(neighbor)) {
                     visited.put(neighbor, true);

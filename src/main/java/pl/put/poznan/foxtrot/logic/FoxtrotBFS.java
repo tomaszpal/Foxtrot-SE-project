@@ -44,7 +44,7 @@ public class FoxtrotBFS implements Foxtrot {
         while (!nodeSet.isEmpty()) {
             Node current = getMinDistNode();
             nodeSet.remove(current);
-            if (current == exit) {
+            if (current.equals(exit)) {
                 break;
             }
             for (Connection connection: current.getOutgoing()) {

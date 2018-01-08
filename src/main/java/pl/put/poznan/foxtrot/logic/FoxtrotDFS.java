@@ -55,7 +55,7 @@ public class FoxtrotDFS implements Foxtrot {
      * @param node - Node to be visited.
      */
     private void VisitNode(Node node) {
-        if (node == exit) {
+        if (node.equals(exit)) {
             if (cost < minCost) {
                 minCost = cost;
                 minPath = path;

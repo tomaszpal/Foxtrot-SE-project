@@ -31,7 +31,7 @@ public class FoxtrotGreedy implements Foxtrot{
     }
 
     private boolean checkIfExit(Connection con){
-        return con.getTo().getType() == Node.Type.exit;
+        return con.getTo().getType().equals(Node.Type.exit);
     }
 
     private Path getPath(List<Connection> conList){
