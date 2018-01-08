@@ -1,7 +1,5 @@
 package pl.put.poznan.foxtrot.logic;
 
-import com.sun.media.sound.InvalidDataException;
-
 import java.util.*;
 
 /**
@@ -23,9 +21,9 @@ public class FoxtrotBFS implements Foxtrot {
     private Node exit;
 
     @Override
-    public Path find(Graph graph) throws InvalidDataException {
+    public Path find(Graph graph) throws Exception {
         if (!graph.check()) {
-            throw new InvalidDataException();
+            throw new Exception();
         }
         nodeSet = new HashSet<>();
         costs = new HashMap<>();
