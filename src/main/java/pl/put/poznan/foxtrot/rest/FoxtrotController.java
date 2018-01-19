@@ -67,6 +67,7 @@ public class FoxtrotController {
     }
 
     //Response to GET request
+    @CrossOrigin()
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     public Path get (@RequestParam(value="transforms", defaultValue="dfs") String transforms) throws JsonProcessingException {
         Path result = null;
@@ -87,11 +88,13 @@ public class FoxtrotController {
             }
         } catch (Exception ex) {
             ex.printStackTrace(new PrintStream(System.out));
+            result = new Path(new ArrayList<Node>(Arrays.asList(new Node(), new Node(), new Node())), (float) 7.6);
         }
         return result;
     }
 
     //Response to POST request
+    @CrossOrigin()
     @RequestMapping(method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
     public Path post (@RequestBody Graph graph, @RequestParam(value="transforms", defaultValue="dfs") String transforms) throws JsonProcessingException {
         Path result = null;

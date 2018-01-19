@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+        <h1>Foxtrot.Put</h1>
+        <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+
+        <div class="elementInput">
+            <p>Add new node:</p>
+            Name: <input type="text" name="Name" id="nodeName" value="Name"><br>
+            Type: <input type="text" name="Type" id="nodeType" value="0"><br>
+            <button type="button" id="nodeInput">Submit</button>
+        </div>
+
+        <div class="elementInput">
+            <p>Add new connection:</p>
+            First node: <input type="text" name="Name" id="connectionId1" value="1"><br>
+            Second node: <input type="text" name="Type" id="connectionId2" value="2"><br>
+            Cost: <input type="text" name="Type" id="connectionCost" value="15"><br>
+            <button type="button" id="connectionInput">Submit</button>
+        </div>
+        <button type="button" id="sendButton">Send</button>
+
+        <div class="requestResult">
+            <p>Request result:</p>
+        </div>
+
+        <div class="currentJSON">
+            <p>Current nodes:</p>
+            <div id = "nodeList"></div>
+            <div id = "connectionList"></div>
+        </div>
+        <script src="script.js"></script>
+</body>
+</html>
