@@ -1,5 +1,6 @@
 package pl.put.poznan.foxtrot.logic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +20,13 @@ public class Path {
         return path;
     }
 
+    public List<Integer> getPathIDs() {
+        List<Integer> result = new ArrayList<>();
+        for (Node node: path) {
+            result.add(node.getId());
+        }
+        return result;
+    }
     public Float getCost() {
         return cost;
     }

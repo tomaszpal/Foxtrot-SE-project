@@ -28,7 +28,7 @@ public class FoxtrotDFS implements Foxtrot {
     @Override
     public Path find(Graph graph) throws Exception {
         if (!graph.check()) {
-            throw new Exception();
+            throw new Exception("Wrong data input.");
         }
         
         visited = new HashMap<>();
@@ -58,7 +58,8 @@ public class FoxtrotDFS implements Foxtrot {
         if (node.equals(exit)) {
             if (cost < minCost) {
                 minCost = cost;
-                minPath = path;
+                minPath = (LinkedList<Node>) path.clone();
+                cost = 0.0f;
             }
 
         }

@@ -1,16 +1,19 @@
 package pl.put.poznan.foxtrot.logic;
 
+
+import java.text.CollationElementIterator;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
 
 public class FoxtrotGreedy implements Foxtrot{
 
-
-    private List<Connection> path = new ArrayList();
     private List<Connection> opened = new ArrayList();
     private List<Connection> closed = new ArrayList();
-
-    private Connection minConnection;
+    private Node entry = null;
+    private Node exit = null;
+    private Connection minConnection = null;
 
 
     private Connection getMinConnection() {
@@ -19,9 +22,9 @@ public class FoxtrotGreedy implements Foxtrot{
 
     private boolean setMinConnection(){
         if (opened != null && !opened.isEmpty()) {
-            Connection best = opened.get(0);
+            minConnection = opened.get(0);
             for (Connection c : opened) {
-                if( best.getValue() > c.getValue())
+                if( minConnection.getValue() > c.getValue())
                     minConnection = c;
             }
             return true;
@@ -35,18 +38,26 @@ public class FoxtrotGreedy implements Foxtrot{
     }
 
     private Path getPath(List<Connection> conList){
-        List<Node> nodeList = new ArrayList<>();
-        float cost = 0;
-        for( Connection c: conList){
-            nodeList.add(c.getFrom());
-            cost += c.getValue();
+        ArrayList<Node> nodeList = new ArrayList<>();
+        Float cost = 0.0f;
+        nodeList.add(exit);
+        for(Connection c: conList) {
+            if (nodeList.get(nodeList.size() - 1).equals(c.getTo())) {
+                nodeList.add(c.getFrom());
+                cost += c.getValue();
+            }
         }
-        nodeList.add(conList.get(conList.size()-1).getTo());
-        return  new Path(nodeList,cost);
+        Collections.reverse(nodeList);
+        return new Path(nodeList,cost);
     }
     @Override
-    public Path find(Graph graph) {
-        Node start = graph.getEntry();
+    public Path find(Graph graph) throws Exception {
+        if (!graph.check()) {
+            throw new Exception("Wrong data input.");
+        }
+        entry = graph.getEntry();
+        exit = graph.getExit();
+        Node start = entry;
         Connection minCon;
         do {
             opened.addAll(start.getOutgoing());
@@ -57,12 +68,16 @@ public class FoxtrotGreedy implements Foxtrot{
                 start = minCon.getTo();
             }
             else {
-                //zglos blad ze nie ma exit w grafie
                 break;
             }
 
         } while(!checkIfExit(minCon));
+        Collections.reverse(closed);
+        for (Connection conn: closed
+             ) {
+            System.out.println(conn.getFrom().getId() + " " + conn.getTo().getId());
 
+        }
         return getPath(closed); //nie wiem co wrzucic zamiast closed
     }
 }

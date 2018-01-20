@@ -17,10 +17,12 @@ public class Graph {
     /** This property holds information about exit node. */
     private Node exit;
 
-    public Graph (){
-        //System.out.println("Graph created!");
-
-    };
+    public Graph() {
+        nodeList = new ArrayList<>();
+        connectionList = new ArrayList<>();
+        entry = null;
+        exit = null;
+    }
 
     public Graph(List<Node> nodes, List<Connection> connections) {
         nodeList = nodes;

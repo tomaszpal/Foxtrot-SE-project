@@ -24,7 +24,7 @@ public class FoxtrotBFS implements Foxtrot {
     @Override
     public Path find(Graph graph) throws Exception {
         if (!graph.check()) {
-            throw new Exception();
+            throw new Exception("Wrong data input.");
         }
         nodeSet = new HashSet<>();
         costs = new HashMap<>();
