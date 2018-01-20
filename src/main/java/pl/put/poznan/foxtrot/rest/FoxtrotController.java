@@ -20,9 +20,8 @@ public class FoxtrotController {
     @CrossOrigin()
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     public Path get (@RequestParam(value="method") String method, @RequestParam(value="values" ) TripletsWrapper values)throws JsonProcessingException {
-        logger.debug("[API] GET Method!");
-
         try {
+            logger.debug("[API] GET Method!");
             Foxtrot search = getMethod(method);
             Graph graph = parseTriplets(values);
             Path result = search.find(graph);
@@ -38,10 +37,8 @@ public class FoxtrotController {
     @CrossOrigin()
     @RequestMapping(method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
     public Path post (@RequestBody TripletsWrapper values, @RequestParam(value="method") String method) throws JsonProcessingException {
-
-        logger.debug("[API] POST Method!");
-
         try {
+            logger.debug("[API] POST Method!");
             Foxtrot search = getMethod(method);
             Graph graph = parseTriplets(values);
             Path result = search.find(graph);
@@ -69,7 +66,7 @@ public class FoxtrotController {
             Node from = findID(nodeList, connectionTriplet.getX());
             Node to = findID(nodeList, connectionTriplet.getY());
             Float cost = connectionTriplet.getZ();
-            if (from.equals(null) || to.equals(null))
+            if (from == null || to == null)
                 throw new Exception("Connection list has wrong ids.");
             Connection connection = new Connection(from, to, cost);
             connectionList.add(connection);
