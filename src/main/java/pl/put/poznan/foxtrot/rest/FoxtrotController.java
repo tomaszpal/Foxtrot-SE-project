@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.foxtrot.logic.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,30 +19,90 @@ public class FoxtrotController {
     //Response to GET request
     @CrossOrigin()
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public Path get (@RequestParam(value="method") String method, @RequestParam(value="nodeList") List<Triplet<Integer, String, Node.Type>> nodeList,
-                     @RequestParam(value="connections") List<Triplet<Integer, Integer, Integer>> connectionList) throws JsonProcessingException {
-        Path result = null;
-
-
+    public Path get (@RequestParam(value="method") String method, @RequestParam(value="values" ) TripletsWrapper values)throws JsonProcessingException {
         logger.debug("[API] GET Method!");
 
-        return result;
+        try {
+            Foxtrot search = getMethod(method);
+            Graph graph = parseTriplets(values);
+            Path result = search.find(graph);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
+
 
     //Response to POST request
     @CrossOrigin()
     @RequestMapping(method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
-    public Path post (@RequestBody Graph graph, @RequestParam(value="method") String method) throws JsonProcessingException {
-        Path result = null;
-        this.graph = graph;
-        System.out.println(method);
+    public Path post (@RequestBody TripletsWrapper values, @RequestParam(value="method") String method) throws JsonProcessingException {
 
         logger.debug("[API] POST Method!");
 
-        return result;
+        try {
+            Foxtrot search = getMethod(method);
+            Graph graph = parseTriplets(values);
+            Path result = search.find(graph);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
+    private Graph parseTriplets(TripletsWrapper values) throws Exception {
+        List<Node> nodeList = new ArrayList<>();
+        List<Connection> connectionList = new ArrayList<>();
 
+        List<Triplet<Integer, String, Node.Type>> nodes = values.getNodeList();
+        List<Triplet<Integer, Integer, Float>> connections = values.getConnectionList();
+
+
+        for (Triplet<Integer, String, Node.Type> nodeTriplet: nodes) {
+            Node node = new Node(nodeTriplet.getX(), nodeTriplet.getZ(), nodeTriplet.getY());
+            nodeList.add(node);
+        }
+
+        for (Triplet<Integer, Integer, Float> connectionTriplet: connections) {
+            Node from = findID(nodeList, connectionTriplet.getX());
+            Node to = findID(nodeList, connectionTriplet.getY());
+            Float cost = connectionTriplet.getZ();
+            if (from.equals(null) || to.equals(null))
+                throw new Exception("Connection list has wrong ids.");
+            Connection connection = new Connection(from, to, cost);
+            connectionList.add(connection);
+        }
+
+        return new Graph(nodeList, connectionList);
+    }
+
+    private Node findID(List<Node> nodeList, Integer id) {
+        for (Node node: nodeList) {
+            if (node.getId().equals(id)) {
+                return node;
+            }
+        }
+        return null;
+    }
+
+    private Foxtrot getMethod(String method) throws Exception {
+        Foxtrot search;
+        if (method.equals("dfs")) {
+            search = new FoxtrotDFS();
+        }
+        else if (method.equals("bfs")) {
+            search = new FoxtrotBFS();
+        }
+        else if (method.equals("greedy")) {
+            search = new FoxtrotGreedy();
+        }
+        else {
+            throw new Exception("Unknown search method!");
+        }
+        return search;
+    }
 
 }
 

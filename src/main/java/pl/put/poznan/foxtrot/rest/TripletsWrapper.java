@@ -7,10 +7,10 @@ import java.util.List;
 
 public class TripletsWrapper {
     private final List<Triplet<Integer, String, Node.Type>> nodeList;
-    private final List<Triplet<Integer, Integer, Integer>> connectionList;
+    private final List<Triplet<Integer, Integer, Float>> connectionList;
 
     public TripletsWrapper(List<Triplet<Integer, String, Node.Type>> nodeList,
-                           List<Triplet<Integer, Integer, Integer>> connectionList) {
+                           List<Triplet<Integer, Integer, Float>> connectionList) {
         this.nodeList = nodeList;
         this.connectionList = connectionList;
     }
@@ -19,7 +19,7 @@ public class TripletsWrapper {
         return nodeList;
     }
 
-    public List<Triplet<Integer, Integer, Integer>> getConnectionList() {
+    public List<Triplet<Integer, Integer, Float>> getConnectionList() {
         return connectionList;
     }
 }

@@ -36,7 +36,7 @@ public class Node {
     }
 
     public Node(Integer id, Type type) {
-        this(id, type, null);
+        this(id, type, "");
     }
 
     public Node(Integer id, Type type, String name) {
