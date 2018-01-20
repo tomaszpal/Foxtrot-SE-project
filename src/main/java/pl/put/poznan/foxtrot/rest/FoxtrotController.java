@@ -14,16 +14,15 @@ import java.util.List;
 public class FoxtrotController {
 
     private static final Logger logger = LoggerFactory.getLogger(FoxtrotController.class);
-    Graph graph;
+    private Graph graph;
 
     //Response to GET request
     @CrossOrigin()
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public Path get (@RequestParam(value="method") String method, @RequestParam(value="values" ) TripletsWrapper values)throws JsonProcessingException {
+    public Path get (@RequestParam(value="method") String method)throws JsonProcessingException {
         try {
             logger.debug("[API] GET Method!");
             Foxtrot search = getMethod(method);
-            Graph graph = parseTriplets(values);
             Path result = search.find(graph);
             return result;
         } catch (Exception e) {
@@ -40,7 +39,7 @@ public class FoxtrotController {
         try {
             logger.debug("[API] POST Method!");
             Foxtrot search = getMethod(method);
-            Graph graph = parseTriplets(values);
+            graph = parseTriplets(values);
             Path result = search.find(graph);
             return result;
         } catch (Exception e) {
