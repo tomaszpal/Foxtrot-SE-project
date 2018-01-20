@@ -7,10 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 public class FoxtrotGreedyTest {
     private Foxtrot search;
-    private Graph graph;
+    private Graph graphMock;
     private Float expectedCost;
     private List<Integer> expectedPath;
     @Before
@@ -31,6 +34,20 @@ public class FoxtrotGreedyTest {
         Connection c4 = new Connection(n3, n5, 4.0f);
         Connection c5 = new Connection(n4, n5, 5.0f);
 
+        n1.addOutgoing(c1);
+        n1.addOutgoing(c2);
+
+        n2.addIncoming(c1);
+        n2.addOutgoing(c3);
+
+        n3.addIncoming(c1);
+        n3.addOutgoing(c4);
+
+        n4.addIncoming(c3);
+        n4.addOutgoing(c5);
+
+        n5.addIncoming(c4);
+        n5.addIncoming(c5);
 
         nodeList.add(n1);
         nodeList.add(n2);
@@ -44,8 +61,12 @@ public class FoxtrotGreedyTest {
         connectionList.add(c4);
         connectionList.add(c5);
 
-        graph = new Graph(nodeList, connectionList);
-        assertTrue(graph.check());
+        graphMock = mock(Graph.class);
+        when(graphMock.check()).thenReturn(true);
+        when(graphMock.getNodeList()).thenReturn(nodeList);
+        when(graphMock.getConnectionList()).thenReturn(connectionList);
+        when(graphMock.getEntry()).thenReturn(n1);
+        when(graphMock.getExit()).thenReturn(n5);
 
         expectedCost = 7.0f;
         expectedPath = new ArrayList<>();
@@ -57,16 +78,20 @@ public class FoxtrotGreedyTest {
 
     @Test
     public void findCorrect() throws Exception {
-        Path path = search.find(graph);
+        Path path = search.find(graphMock);
 
         assertTrue(path.getCost().equals(expectedCost));
         assertTrue(path.getPathIDs().equals(expectedPath));
+        verify(graphMock, times(1)).check();
+        verify(graphMock, times(1)).getEntry();
+        verify(graphMock, times(1)).getExit();
     }
 
     @Test(expected = Exception.class)
     public void findWrongData() throws Exception {
-        Node node = new Node(5, Node.Type.entry, "name6");
-        graph.getNodeList().add(node);
-        Path path = search.find(graph);
+        when(graphMock.check()).thenReturn(false);
+
+        Path path = search.find(graphMock);
+        verify(graphMock, times(1)).check();
     }
 }

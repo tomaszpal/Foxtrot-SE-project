@@ -85,11 +85,7 @@ public class FoxtrotGreedy implements Foxtrot{
 
         } while(!checkIfExit(minCon));
         Collections.reverse(closed);
-        for (Connection conn: closed
-             ) {
-            System.out.println(conn.getFrom().getId() + " " + conn.getTo().getId());
 
-        }
-        return getPath(closed); //nie wiem co wrzucic zamiast closed
+        return getPath(closed);
     }
 }
