@@ -6,7 +6,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
+/**
+ * This class implements Foxtrot interface.
+ * It uses modified A star strategy to search for the shortest path.
+ */
 public class FoxtrotGreedy implements Foxtrot{
 
     private List<Connection> opened = new ArrayList();
@@ -15,11 +18,13 @@ public class FoxtrotGreedy implements Foxtrot{
     private Node exit = null;
     private Connection minConnection = null;
 
-
-    private Connection getMinConnection() {
-        return minConnection;
-    }
-
+    /**
+     * This function sets minConnection variable
+     * to the connection from opened list which
+     * has the lowest cost.
+     * @return boolean - True if connection found,
+     *                   false otherwise.
+     */
     private boolean setMinConnection(){
         if (opened != null && !opened.isEmpty()) {
             minConnection = opened.get(0);
@@ -33,6 +38,13 @@ public class FoxtrotGreedy implements Foxtrot{
             return false;
     }
 
+    /**
+     * This function checks if given connection
+     * is connection to exit node.
+     * @param con - connection to check.
+     * @return - True if connection to exit,
+     *           false otherwise.
+     */
     private boolean checkIfExit(Connection con){
         return con.getTo().getType().equals(Node.Type.exit);
     }
@@ -62,7 +74,7 @@ public class FoxtrotGreedy implements Foxtrot{
         do {
             opened.addAll(start.getOutgoing());
             if(setMinConnection()) {
-                minCon = getMinConnection();
+                minCon = minConnection;
                 closed.add(minCon);
                 opened.remove(minCon);
                 start = minCon.getTo();
