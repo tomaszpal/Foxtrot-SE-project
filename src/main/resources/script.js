@@ -46,7 +46,7 @@ $( "#connectionInput" ).click(function( event ) {
 });
 
 $( "#sendButton" ).click(function( event ) {
-    if(nodes.length > 0 && connections.length > 0) {
+
         submit = {
             nodes: nodes,
             connections: connections
@@ -64,7 +64,29 @@ $( "#sendButton" ).click(function( event ) {
         nodes = [];
         $(".nodeItem").remove();
         $(".connectionItem").remove();
-    }
+
 });
 
+$( "#sendFileButton" ).click(function( event ) {
+    $.post("http://localhost:8080/xd"), submitJSON, function (data) {
+        console.log(data);
+    };
+    console.log("Sent: \n" + submitJSON);
+});
 
+function readSingleFile(evt) {
+    //Retrieve the first (and only!) File from the FileList object
+    var f = evt.target.files[0];
+
+    if (f) {
+        var r = new FileReader();
+        r.onload = function(e) {
+            submitJSON = e.target.result;
+        }
+        r.readAsText(f);
+    } else {
+        alert("Failed to load file");
+    }
+}
+
+document.getElementById('fileinput').addEventListener('change', readSingleFile, false);
