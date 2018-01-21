@@ -25,8 +25,12 @@ public class FoxtrotController {
             logger.debug("[API] GET Method!");
             Foxtrot search = getMethod(method);
             Path result = search.find(graph);
+            logger.info("[API] Request handled correctly.");
+            logger.debug("[API-GET] All good!");
             return result;
         } catch (Exception e) {
+            logger.info("[API] Request failed, info in debug.");
+            logger.debug("[FAIL] " + e.toString());
             e.printStackTrace();
         }
         return null;
@@ -42,8 +46,12 @@ public class FoxtrotController {
             Foxtrot search = getMethod(method);
             graph = parseTriplets(values);
             Path result = search.find(graph);
+            logger.info("[API] Request handled correctly.");
+            logger.debug("[API-GET] All good!");
             return result;
         } catch (Exception e) {
+            logger.info("[API] Request failed, info in debug.");
+            logger.debug("[FAIL] " + e.toString());
             e.printStackTrace();
         }
         return null;

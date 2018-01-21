@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * This class implements Foxtrot interface.
- * It uses modified A star strategy to search for the shortest path.
+ * It uses modified Best First Search strategy to search for the shortest path.
  */
 public class FoxtrotGreedy implements Foxtrot{
 
