@@ -19,6 +19,7 @@ public class FoxtrotController {
     //Response to GET request
     @CrossOrigin()
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
+
     public Path get (@RequestParam(value="method") String method)throws JsonProcessingException {
         try {
             logger.debug("[API] GET Method!");
@@ -83,7 +84,7 @@ public class FoxtrotController {
         return null;
     }
 
-    private Foxtrot getMethod(String method) throws Exception {
+private Foxtrot getMethod(String method) throws Exception {
         Foxtrot search;
         if (method.equals("dfs")) {
             search = new FoxtrotDFS();
