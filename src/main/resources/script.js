@@ -12,7 +12,7 @@ $.getJSON( "http://localhost:8080/xd", function( data ) {
 
 
 var submitJSON;
-var submit = [];
+var submit;
 
 var nodes = [];
 var nodesJSON;
@@ -46,12 +46,25 @@ $( "#connectionInput" ).click(function( event ) {
 });
 
 $( "#sendButton" ).click(function( event ) {
-    submit.push({
-        nodes: nodes,
-        connections: connections
-    });
-    submitJSON = JSON.stringify(submit);
-    console.log("Sent: \n" + submitJSON);
+    if(nodes.length > 0 && connections.length > 0) {
+        submit = {
+            nodes: nodes,
+            connections: connections
+        };
+        submitJSON = JSON.stringify(submit);
+
+        $.post("http://localhost:8080/xd"), submitJSON, function (data) {
+          console.log(data);  
+        };
+
+        console.log("Sent: \n" + submitJSON);
+        submitJSON = "";
+        submit = {};
+        connections = [];
+        nodes = [];
+        $(".nodeItem").remove();
+        $(".connectionItem").remove();
+    }
 });
 
 
